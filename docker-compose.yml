@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  gateway:
+    container_name: "api-gateway"
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - 3005:3005
+
+  events:
+    container_name: "api-events"
+    build:
+      context: ./events
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+
+  # users:
+  #   container_name: "api-users"
+  # venues:
+  #   container_name: "api-venues"
+  # client:
+  #   container_name: "app-client"

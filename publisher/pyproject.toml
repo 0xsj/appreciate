@@ -1,0 +1,16 @@
+[project]
+name = "publisher"
+version = "0.1.0"
+description = "RSS feed publisher"
+authors = [{ name = "0xsj", email = "sjtommylee@gmail.com" }]
+dependencies = ["fastapi>=0.111.0", "alembic>=1.13.1"]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = { text = "MIT" }
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+start = { cmd = "uvicorn src.app.main:app --host 0.0.0.0 --port 9000 --reload", help = "start server" }

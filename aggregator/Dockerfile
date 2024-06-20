@@ -23,4 +23,4 @@ RUN chmod +x ./scripts/entrypoint.sh
 EXPOSE 8000
 
 # Run the entrypoint script
-CMD ["./scripts/entrypoint.sh"]
+CMD ["./scripts/entrypoint.sh", "./scripts/protoc.sh"]

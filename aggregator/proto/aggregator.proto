@@ -1,0 +1,20 @@
+syntax = 'proto3';
+
+service Aggregator {
+  rpc GetAll(Empty) returns (GetAllResponse) {}
+  rpc Get(GetByIdRequest) returns (GetByIdResponse) {}
+}
+
+message Resource {
+  string id = 1;
+  string title = 2;
+  string body = 3;
+}
+
+message Empty {}
+message GetAllResponse { Resource resource = 1; }
+message GetByIdRequest { string id = 1; }
+message GetByIdResponse {
+  string id = 1;
+  string content = 2;
+}

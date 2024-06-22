@@ -18,6 +18,7 @@ COPY scripts ./scripts
 
 # Make entrypoint script executable
 RUN chmod +x ./scripts/entrypoint.sh
+RUN chmod +x ./scripts/protoc.sh
 
 # Expose the port the app runs on
 EXPOSE 8000

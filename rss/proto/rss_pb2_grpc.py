@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import aggregator_pb2 as aggregator__pb2
+import rss_pb2 as rss__pb2
 
 GRPC_GENERATED_VERSION = '1.64.1'
 GRPC_VERSION = grpc.__version__
@@ -20,7 +20,7 @@ except ImportError:
 if _version_not_supported:
     warnings.warn(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in aggregator_pb2_grpc.py depends on'
+        + f' but the generated code in rss_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -30,7 +30,7 @@ if _version_not_supported:
     )
 
 
-class AggregatorStub(object):
+class RSSAggregatorStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -40,18 +40,18 @@ class AggregatorStub(object):
             channel: A grpc.Channel.
         """
         self.GetAll = channel.unary_unary(
-                '/Aggregator/GetAll',
-                request_serializer=aggregator__pb2.Empty.SerializeToString,
-                response_deserializer=aggregator__pb2.GetAllResponse.FromString,
+                '/RSSAggregator/GetAll',
+                request_serializer=rss__pb2.Empty.SerializeToString,
+                response_deserializer=rss__pb2.GetAllResponse.FromString,
                 _registered_method=True)
         self.Get = channel.unary_unary(
-                '/Aggregator/Get',
-                request_serializer=aggregator__pb2.GetByIdRequest.SerializeToString,
-                response_deserializer=aggregator__pb2.GetByIdResponse.FromString,
+                '/RSSAggregator/Get',
+                request_serializer=rss__pb2.GetByIdRequest.SerializeToString,
+                response_deserializer=rss__pb2.GetByIdResponse.FromString,
                 _registered_method=True)
 
 
-class AggregatorServicer(object):
+class RSSAggregatorServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetAll(self, request, context):
@@ -67,27 +67,27 @@ class AggregatorServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_AggregatorServicer_to_server(servicer, server):
+def add_RSSAggregatorServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetAll': grpc.unary_unary_rpc_method_handler(
                     servicer.GetAll,
-                    request_deserializer=aggregator__pb2.Empty.FromString,
-                    response_serializer=aggregator__pb2.GetAllResponse.SerializeToString,
+                    request_deserializer=rss__pb2.Empty.FromString,
+                    response_serializer=rss__pb2.GetAllResponse.SerializeToString,
             ),
             'Get': grpc.unary_unary_rpc_method_handler(
                     servicer.Get,
-                    request_deserializer=aggregator__pb2.GetByIdRequest.FromString,
-                    response_serializer=aggregator__pb2.GetByIdResponse.SerializeToString,
+                    request_deserializer=rss__pb2.GetByIdRequest.FromString,
+                    response_serializer=rss__pb2.GetByIdResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'Aggregator', rpc_method_handlers)
+            'RSSAggregator', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('Aggregator', rpc_method_handlers)
+    server.add_registered_method_handlers('RSSAggregator', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class Aggregator(object):
+class RSSAggregator(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -104,9 +104,9 @@ class Aggregator(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Aggregator/GetAll',
-            aggregator__pb2.Empty.SerializeToString,
-            aggregator__pb2.GetAllResponse.FromString,
+            '/RSSAggregator/GetAll',
+            rss__pb2.Empty.SerializeToString,
+            rss__pb2.GetAllResponse.FromString,
             options,
             channel_credentials,
             insecure,
@@ -131,9 +131,9 @@ class Aggregator(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/Aggregator/Get',
-            aggregator__pb2.GetByIdRequest.SerializeToString,
-            aggregator__pb2.GetByIdResponse.FromString,
+            '/RSSAggregator/Get',
+            rss__pb2.GetByIdRequest.SerializeToString,
+            rss__pb2.GetByIdResponse.FromString,
             options,
             channel_credentials,
             insecure,

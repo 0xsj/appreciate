@@ -3,7 +3,7 @@
 BASEDIR=$(dirname "$0")
 cd "${BASEDIR}"/../
 
-echo "Generator proto publisher gRPC...";
+echo "Generator proto rss gRPC...";
 
 python -m grpc_tools.protoc \
     -I./proto \
@@ -11,4 +11,4 @@ python -m grpc_tools.protoc \
     --python_out=./proto \
     --pyi_out=./proto \
     --grpc_python_out=./proto \
-    ./proto/publisher.proto
+    ./proto/rss.proto

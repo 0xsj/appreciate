@@ -10,9 +10,9 @@ services:
       - 3005:3005
 
   events:
-    container_name: "api-aggregator"
+    container_name: "api-rss"
     build:
-      context: ./aggregator
+      context: ./rss
       dockerfile: Dockerfile
     ports:
       - "8000:8000"

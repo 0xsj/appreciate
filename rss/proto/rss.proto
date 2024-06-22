@@ -1,20 +1,17 @@
 syntax = 'proto3';
 
-service Aggregator {
+service RSSAggregator {
   rpc GetAll(Empty) returns (GetAllResponse) {}
   rpc Get(GetByIdRequest) returns (GetByIdResponse) {}
 }
 
-message Resource {
+message NewsItem {
   string id = 1;
   string title = 2;
-  string body = 3;
+  string description = 3;
 }
 
 message Empty {}
-message GetAllResponse { Resource resource = 1; }
+message GetAllResponse { NewsItem item = 1; }
 message GetByIdRequest { string id = 1; }
-message GetByIdResponse {
-  string id = 1;
-  string content = 2;
-}
+message GetByIdResponse { NewsItem item = 1; }

@@ -1,9 +1,12 @@
-// src/api/apiClient.ts
 import axios, { AxiosError } from 'axios';
 import { ApiResult, ApiError } from '@/types/api';
 
+/**
+ * Interface for API error response
+ */
 interface ApiErrorResponse {
   message?: string;
+  code?: string;
   details?: {
     entity?: string;
     id?: string;
@@ -19,13 +22,16 @@ export class ApiClient {
     this.baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
   }
 
-  private handleAxiosError(error: AxiosError<ApiErrorResponse>): ApiError {
+  /**
+   * Transform HTTP errors to ApiError
+   */
+  private handleAxiosError(error: AxiosError): ApiError {
     if (!error.response) {
       return ApiError.network('Network error or server not responding');
     }
 
     const status = error.response.status;
-    const data = error.response.data;
+    const data = error.response.data as unknown as ApiErrorResponse;
     const message = data?.message || error.message;
 
     switch (status) {
@@ -54,6 +60,9 @@ export class ApiClient {
     }
   }
 
+  /**
+   * Generic request method returning ApiResult
+   */
   async request<T>(config: {
     method: string;
     path: string;
@@ -62,6 +71,9 @@ export class ApiClient {
   }): Promise<ApiResult<T>> {
     try {
       const { method, path, data, params } = config;
+
+      // Get token from localStorage in client-side code
+      // Use Record<string, string> to allow dynamic property assignment
       const headers: Record<string, string> = { 'Content-Type': 'application/json' };
 
       if (typeof window !== 'undefined') {
@@ -71,11 +83,7 @@ export class ApiClient {
         }
       }
 
-      interface ApiSuccessResponse<T> {
-        data: T;
-      }
-
-      const response = await axios<ApiSuccessResponse<T>>({
+      const response = await axios({
         method,
         url: `${this.baseURL}${path}`,
         data,
@@ -88,7 +96,7 @@ export class ApiClient {
       if (axios.isAxiosError(error)) {
         return {
           kind: 'error',
-          error: this.handleAxiosError(error as AxiosError<ApiErrorResponse>),
+          error: this.handleAxiosError(error),
         };
       }
 
@@ -101,6 +109,9 @@ export class ApiClient {
     }
   }
 
+  /**
+   * Type-safe convenience methods
+   */
   async get<T>(path: string, params?: Record<string, string>): Promise<ApiResult<T>> {
     return this.request<T>({ method: 'GET', path, params });
   }
@@ -121,3 +132,6 @@ export class ApiClient {
     return this.request<T>({ method: 'DELETE', path });
   }
 }
+
+// Export a singleton instance
+export const apiClient = new ApiClient();
